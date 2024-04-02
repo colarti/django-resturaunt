@@ -7,6 +7,11 @@ class MenuList(generic.ListView):   #this function requires very name specific v
     queryset = Item.objects.order_by('date_created')
     template_name = 'index.html'
 
+    def get_context_data(self): #this is specific named for django
+        context = {'meals':'Pizza',
+                   'ingredients':['Pepperoni', 'Tomato', 'Mozzarella']}
+        return context
+
 class MenuItemDetail(generic.DetailView):
     model = Item
     template_name = 'menu_item_detail.html'
