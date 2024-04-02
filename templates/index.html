@@ -6,8 +6,14 @@
 </head>
 <body>
     <h1>Resturaunt Menu</h1>
-
-    <h3>{{ meals }}</h3>
-    <h4>{{ ingredients }}</h2>
+    {% for meal in meals %}
+        <h2>{{ meal.1 }}</h2>           <!-- a meal is a tuple of MEAL_TYPE - (variable_name, string_name) the 1 is to get the string_name-->
+        {% for m in item_list %}        <!-- item_list is comprised from models.Item (in lowercase) +'_list', django is expecting this convention-->
+            {% if m.meal_type == meal.0 %}
+                <h3>{{ m.meal }}</h3>
+                <p>{{ m.description }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 </body>
 </html>
