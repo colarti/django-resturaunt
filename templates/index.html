@@ -10,7 +10,11 @@
         <h2>{{ meal.1 }}</h2>           <!-- a meal is a tuple of MEAL_TYPE - (variable_name, string_name) the 1 is to get the string_name-->
         {% for m in item_list %}        <!-- item_list is comprised from models.Item (in lowercase) +'_list', django is expecting this convention-->
             {% if m.meal_type == meal.0 %}
+                {% if m.status == 0 %}
+                <h3><del>{{ m.meal }}</del></h3>
+                {% else %}
                 <h3>{{ m.meal }}</h3>
+                {% endif %}
                 <p>{{ m.description }}</p>
             {% endif %}
         {% endfor %}
