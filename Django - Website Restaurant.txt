@@ -1,0 +1,68 @@
+Django - Website Restaurant
+
+0. pip install qrcode and pillow
+1. Create a qrcode
+
+2. pip install django
+3. create a django project > django-admin startproject mysite .
+4. create app name > python manage.py startapp restaurant_menu
+5. link the restaurant_menu to the mysite
+	- go to mysite/settings.py
+	- under the INSTALLED_APPS, include 'restaurant_men'
+		INSTALLED_APPS = [
+		    'django.contrib.admin',
+		    'django.contrib.auth',
+		    'django.contrib.contenttypes',
+		    'django.contrib.sessions',
+		    'django.contrib.messages',
+		    'django.contrib.staticfiles',
+		    'restaurant_menu',			<--new item
+		]
+
+6. start the django server to get confirmation > python manage.py runserver
+7. click on the link (default is http://127.0.0.1) to get to the site, should see rocket
+
+8. Now create the model database (or the data to be visualized on the webpage) in restaurant/models.py
+	- create a class with all of the necessary data types
+---------------------------------------------------------------------------
+MEAL_TYPE = (
+    ('starters', 'Starters'),
+    ('salads', 'Salads'),
+    ('main_dishes', 'Main Dishes'),
+    ('desserts', 'Desserts')
+)
+
+STATUS = (
+    (0, 'Unavailable'),
+    (1, 'Available')
+)
+
+class Item(models.Model):
+    meal = models.CharField(max_length=1000, unique=True)   #this is a column in a database
+    description = models.CharField(max_length=2000)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    meal_type = models.CharField(max_length=500, choices = MEAL_TYPE)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)      #CASCADE will delete all meals from the User who is deleted
+                                                                    #PROTECT will keep all meals because the User cannot be deleted
+                                                                    #SET_NULL if User is deleted, then the User will be NULL and the meals will remain
+    status = models.IntegerField(choices=STATUS, default=1)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.meal
+---------------------------------------------------------------------------
+
+9. Now setup a migrations object > python manage.py makemigrations
+	- this will create a folder # restaurant/migrations/0001_initial.py
+
+	**If this folder is not created, then there are errors in the model above
+
+10. Now create a table using the migrations > python manage.py migrate
+	- This will create a sql database on the root folder # db.sqlite3
+	- View this database using DB Browser SQLite
+
+
+
+
+

@@ -13,6 +13,7 @@ STATUS = (
     (1, 'Available')
 )
 
+#These are columns in a database
 class Item(models.Model):
     meal = models.CharField(max_length=1000, unique=True)   #this is a column in a database
     description = models.CharField(max_length=2000)
