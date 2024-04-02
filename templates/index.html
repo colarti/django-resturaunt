@@ -11,10 +11,11 @@
         {% for m in item_list %}        <!-- item_list is comprised from models.Item (in lowercase) +'_list', django is expecting this convention-->
             {% if m.meal_type == meal.0 %}
                 {% if m.status == 0 %}
-                <h3><del>{{ m.meal }}</del></h3>
+                <a href="{% url 'menu_item' m.pk %}"><h3><del>{{ m.meal }}</del></h3></a>    <!-- this will create a strike-thru on the words -->
                 {% else %}
-                <h3>{{ m.meal }}</h3>
+                <a href="{% url 'menu_item' m.pk %}"><h3>{{ m.meal }}</h3></a>
                 {% endif %}
+
                 <p>{{ m.description }}</p>
             {% endif %}
         {% endfor %}
